@@ -15,7 +15,7 @@ app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 
-mongoose.connect(vntUtil.MONGODB_CONN_STRING, { useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.connect(vntUtil.MONGODB_CONN_STRING, {useUnifiedTopology: true, useNewUrlParser: true});
 const connection = mongoose.connection;
 
 connection.once('open', function () {
