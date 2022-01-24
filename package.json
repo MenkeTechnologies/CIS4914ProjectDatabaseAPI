@@ -1,0 +1,34 @@
+{
+  "name": "cis4914projectdatabase-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "entry/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node entry/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VolunteerNation/VolunteerNationAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VolunteerNation/VolunteerNationAPI/issues"
+  },
+  "homepage": "https://github.com/VolunteerNation/VolunteerNationAPI#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "express-jwt": "^6.1.0",
+    "express-validator": "^6.14.0",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.1.7",
+    "passport": "^0.5.2"
+  }
+}
