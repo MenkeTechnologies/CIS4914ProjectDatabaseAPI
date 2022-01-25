@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 
 // User Model
 const User = require("../../models/user.model");
-module.exports = function (passport) {
+module.exports = passport => {
   passport.use(
     new localStrategy({usernameField: "email"}, (email, password, done) => {
       // Check if user exists

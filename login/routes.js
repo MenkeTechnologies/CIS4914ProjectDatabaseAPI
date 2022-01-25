@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("./models/user.model");
 const bcrypt = require("bcryptjs");
 const {body, validationResult} = require('express-validator');
-const vntUtil = require('../util/vntUtil');
+const projectDBUtil = require('../util/projectDBUtil');
 
 
 // Login User
@@ -19,7 +19,7 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
 
   const validationResult1 = validationResult(req);
   if (!validationResult1.isEmpty()) {
-    return res.status(400).json(vntUtil.errorMsg(validationResult1.array()));
+    return res.status(400).json(projectDBUtil.errorMsg(validationResult1.array()));
   }
 
 
@@ -31,20 +31,20 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
   User.findOne({email: email})
     .then((user) => {
       if (!user) {
-        return res.status(401).json(vntUtil.errorMsg('That email is not registered'));
+        return res.status(401).json(projectDBUtil.errorMsg('That email is not registered'));
       }
       // Match password
       bcrypt.compare(password, user.password, (err, isMatched) => {
         if (err) throw err;
         if (isMatched) {
-          const token = vntUtil.createToken(email);
+          const token = projectDBUtil.createToken(email);
           return res.status(200).json(token);
         } else {
-          return res.status(401).json(vntUtil.errorMsg('Password incorrect.'));
+          return res.status(401).json(projectDBUtil.errorMsg('Password incorrect.'));
         }
       });
     })
-    .catch((err) => res.status(500).send(vntUtil.errorMsg("user find failure.")));
+    .catch((err) => res.status(500).send(projectDBUtil.errorMsg("user find failure.")));
 })
 
 
@@ -54,7 +54,7 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
 
   const validationResult1 = validationResult(req);
   if (!validationResult1.isEmpty()) {
-    return res.status(400).json(vntUtil.errorMsg(validationResult1.array()));
+    return res.status(400).json(projectDBUtil.errorMsg(validationResult1.array()));
   }
 
   const {name, email, password, password2} = req.body;
@@ -63,14 +63,14 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
 
   let errors = [];
   if (!name || !email || !password || !password2) {
-    errors.push(vntUtil.errorMsg("Please fill all fields"));
+    errors.push(projectDBUtil.errorMsg("Please fill all fields"));
   }
   if (password !== password2) {
-    errors.push(vntUtil.errorMsg("Passwords do not match"));
+    errors.push(projectDBUtil.errorMsg("Passwords do not match"));
   }
   const pass = String(password);
   if (pass.length < 6) {
-    errors.push(vntUtil.errorMsg("Password should be at least 6 characters"));
+    errors.push(projectDBUtil.errorMsg("Password should be at least 6 characters"));
   }
 
   if (errors.length > 0) {
@@ -103,7 +103,7 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
             newUser
               .save()
               .then((user) => {
-                const token = vntUtil.createToken(email);
+                const token = projectDBUtil.createToken(email);
                 return res.status(200).json(token);
               })
               .catch((err) => res.status(500).send(err));

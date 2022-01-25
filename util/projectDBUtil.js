@@ -12,16 +12,12 @@ const secret = 'secret';
 const audience = 'http://myapi/protected';
 const issuer = 'http://issuer';
 
-const successMsg = (msg) => {
-  return {
+const successMsg = (msg) => ({
     msg: msg
-  };
-}
-const errorMsg = (msg) => {
-  return {
+})
+const errorMsg = (msg) => ({
     msg: msg
-  };
-}
+})
 
 // const authMiddleware = () => jwt({
 //     secret: secret,

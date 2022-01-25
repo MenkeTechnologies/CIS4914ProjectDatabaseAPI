@@ -1,4 +1,4 @@
-## Volunteer Nation API CEN3031 University of Florida Fall 2020
+## CIS 4914 Project Database University of Florida
 
 Just a Simple Express API
 
@@ -7,7 +7,7 @@ Just a Simple Express API
 - Install `node` and `npm` with OS package manager
 
 - Clone down this repository.
-    - `git clone https://github.com/VolunteerNation/VolunteerNationAPI`
+    - `git clone https://github.com/MenkeTechnologies/CIS4914ProjectDatabaseAPI`
 
 - Install local libraries
     - `npm install`
