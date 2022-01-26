@@ -16,9 +16,8 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 mongoose.connect(projectDBUtil.MONGODB_CONN_STRING, {useUnifiedTopology: true, useNewUrlParser: true});
-const connection = mongoose.connection;
 
-connection.once('open', () => {
+mongoose.connection.once('open', () => {
   console.log(`---- MongoDB database connection established successfully`);
 })
 

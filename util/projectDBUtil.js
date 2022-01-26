@@ -13,10 +13,10 @@ const audience = 'http://myapi/protected';
 const issuer = 'http://issuer';
 
 const successMsg = (msg) => ({
-    msg: msg
+    msg
 })
 const errorMsg = (msg) => ({
-    msg: msg
+    msg
 })
 
 // const authMiddleware = () => jwt({
@@ -46,7 +46,7 @@ const authMiddleware = (req, res, next) => {
 
 const createToken = (email) => {
   console.log("createToken called");
-  const token = jsonwebtoken.sign({email: email}, secret,
+  const token = jsonwebtoken.sign({email}, secret,
     {
       audience: audience,
       issuer: issuer

@@ -28,7 +28,7 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
 
   console.log(req.body);
 
-  User.findOne({email: email})
+  User.findOne({email})
     .then((user) => {
       if (!user) {
         return res.status(401).json(projectDBUtil.errorMsg('That email is not registered'));
@@ -79,7 +79,7 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
 
   } else {
     // if the validation is successful
-    User.findOne({email: email}).then((user) => {
+    User.findOne({email}).then((user) => {
       console.log("Find one initiated");
       console.log(user);
       if (user) {

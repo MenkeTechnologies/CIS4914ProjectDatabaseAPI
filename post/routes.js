@@ -32,9 +32,8 @@ router.post("/create", authMiddleware, (req, res) => {
     let user_email = email.email;
     console.log(user_email);
     if (!email) {
-      errors.push({msg: "Not a registered user"});
       console.log("User mismatch");
-      return res.status(400).json(errors);
+      return res.status(400).json(projectDBUtil.errorMsg("Not a registered user"));
     } else {
       const newPost = new Post({
         email: user_email,
@@ -59,7 +58,7 @@ router.post("/create", authMiddleware, (req, res) => {
           res.send("post saved to database");
         })
         .catch((err) => {
-          res.status(400).send(`unable to save to database ${err}`);
+          res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
         });
     }
   });
@@ -70,7 +69,7 @@ router.get("/", (req, res) => {
   Post.find({}).then(
     posts => {
       return res.status(200).send(posts);
-    }).catch(err => res.status(400).send(`unable to save to database ${err}`));
+    }).catch(err => res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`)));
 });
 
 router.get("/my_posts", authMiddleware, (req, res) => {
@@ -78,7 +77,7 @@ router.get("/my_posts", authMiddleware, (req, res) => {
   Post.find({"email": req.user.email}).then(
     posts => {
       return res.status(200).send(posts);
-    }).catch(err => res.status(400).send(`unable to save to database ${err}`));
+    }).catch(err => res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`)));
 });
 
 router.post("/volunteer/", authMiddleware, (req, res) => {
@@ -92,7 +91,7 @@ router.post("/volunteer/", authMiddleware, (req, res) => {
           return res.send("User assigned as volunteer");
         });
       });
-    }).catch(err => res.status(400).send(`unable to set as volunteer ${err}`));
+    }).catch(err => res.status(400).send(projectDBUtil.errorMsg(`unable to set as volunteer ${err}`)));
 });
 
 module.exports = router;

@@ -8,7 +8,7 @@ module.exports = passport => {
   passport.use(
     new localStrategy({usernameField: "email"}, (email, password, done) => {
       // Check if user exists
-      User.findOne({email: email})
+      User.findOne({email})
         .then((user) => {
           if (!user) {
             return done(null, false, {message: "That email is not registered"});
