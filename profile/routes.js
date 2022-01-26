@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 let Profile = require('./models/profile.model');
 const projectDBUtil = require('../util/projectDBUtil');
+const log = projectDBUtil.log;
 
 // Gives all profiles - will use for debugging in Postman but will remove later
 router.route('/').get((req, res) => {
   Profile.find((err, profiles) => {
-    console.log(req);
+    log.info(req);
     if (err) {
-      console.log(err);
+      log.info(err);
     } else {
       res.json(profiles);
     }

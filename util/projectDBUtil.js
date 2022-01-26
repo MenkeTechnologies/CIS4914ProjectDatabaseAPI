@@ -1,12 +1,12 @@
 const jsonwebtoken = require('jsonwebtoken');
 const jwt = require('express-jwt');
-
+const projectDBUtil = require("../util/projectDBUtil");
 const creds = require('../secret.json')
 
 const MONGODB_CONN_STRING = creds.connection;
-const PROFILE_API_PREFIX = '/vnt_profile';
-const USER_API_PREFIX = '/vnt_user';
-const POST_API_PREFIX = '/vnt_post';
+const PROFILE_API_PREFIX = '/cis4914_project';
+const USER_API_PREFIX = '/cis4914_user';
+const POST_API_PREFIX = '/cis4914_post';
 const PORT = 4000;
 const secret = 'secret';
 const audience = 'http://myapi/protected';
@@ -26,37 +26,49 @@ const errorMsg = (msg) => ({
 //     algorithms: ["HS256"]
 // });
 
+const Logger = require('pretty-logger');
+Logger.setLevel("info");
+const customConfig = {
+  showMillis: true,
+  showTimestamp: true,
+  info: "green",
+  error: ["bgRed", "bold"],
+  debug: "rainbow"
+};
+const log = new Logger(customConfig);
+
 const authMiddleware = (req, res, next) => {
-  console.log('token attempting to verify');
+  log.info('token attempting to verify');
   const token = req.header('auth-token');
-  console.log(token);
+  log.info(token);
   if (!token) {
-    return res.status(401).send('Access Denied');
+    return res.status(401).send(projectDBUtil.errorMsg('Access Denied'));
   }
-  console.log(token);
+  log.info(token);
   try {
     const verified = jsonwebtoken.verify(token, secret);
-    console.log(verified);
+    log.info(verified);
     req.user = verified;
     next();
   } catch (err) {
-    res.status(400).send('Invalid Token');
+    res.status(400).send(projectDBUtil.errorMsg('Invalid Token'));
   }
 }
 
 const createToken = (email) => {
-  console.log("createToken called");
+  log.info("createToken called");
   const token = jsonwebtoken.sign({email}, secret,
     {
       audience: audience,
       issuer: issuer
     }
   );
-  console.log("createToken complete");
+  log.info("createToken complete");
   return token;
 };
 
 module.exports = {
+  log,
   authMiddleware,
   createToken,
   successMsg,

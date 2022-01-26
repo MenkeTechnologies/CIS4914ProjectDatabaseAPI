@@ -7,9 +7,10 @@ const {body, validationResult} = require("express-validator");
 const projectDBUtil = require("../util/projectDBUtil");
 const {authMiddleware} = require("../util/projectDBUtil");
 const mongoose = require("mongoose");
+const log = projectDBUtil.log;
 
 router.post("/create", authMiddleware, (req, res) => {
-  console.log("Create called.");
+  log.info("Create called.");
 
   const {
     firstName,
@@ -25,14 +26,14 @@ router.post("/create", authMiddleware, (req, res) => {
     completionDate,
   } = req.body;
 
-  console.log(req.user.email);
+  log.info(req.user.email);
 
   User.findOne({email: req.user.email}).then((email) => {
-    console.log("Find one initiated");
+    log.info("Find one initiated");
     let user_email = email.email;
-    console.log(user_email);
+    log.info(user_email);
     if (!email) {
-      console.log("User mismatch");
+      log.info("User mismatch");
       return res.status(400).json(projectDBUtil.errorMsg("Not a registered user"));
     } else {
       const newPost = new Post({
@@ -49,7 +50,7 @@ router.post("/create", authMiddleware, (req, res) => {
         completionStatus,
         completionDate,
       });
-      console.log(newPost);
+      log.info(newPost);
 
       //From here you can take the newPost object and send to Database
       newPost
@@ -65,7 +66,7 @@ router.post("/create", authMiddleware, (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  console.log("Get all posts called.");
+  log.info("Get all posts called.");
   Post.find({}).then(
     posts => {
       return res.status(200).send(posts);
@@ -73,7 +74,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/my_posts", authMiddleware, (req, res) => {
-  console.log("Get all users' posts called.");
+  log.info("Get all users' posts called.");
   Post.find({"email": req.user.email}).then(
     posts => {
       return res.status(200).send(posts);
@@ -81,7 +82,7 @@ router.get("/my_posts", authMiddleware, (req, res) => {
 });
 
 router.post("/volunteer/", authMiddleware, (req, res) => {
-  console.log("Update Post called.");
+  log.info("Update Post called.");
   Post.findById(req.body.id).then(
     post => {
       User.findOne({email: req.user.email}).then(user => {

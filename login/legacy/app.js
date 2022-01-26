@@ -21,8 +21,8 @@ require("./config/passport")(passport);
 //     useUnifiedTopology: true,
 //     useNewUrlParser: true,
 //   })
-//   .then(console.log("MongoDB connected..."))
-//   .catch((err) => console.log(`DB Connection Error: ${err.message}`));
+//   .then(log.info("MongoDB connected..."))
+//   .catch((err) => log.info(`DB Connection Error: ${err.message}`));
 //
 // // EJS
 // app.use(expressLayouts);
@@ -60,4 +60,4 @@ require("./config/passport")(passport);
 //
 // const PORT = process.env.PORT || 5000;
 //
-// app.listen(PORT, console.log(`Server started on port ${PORT}`));
+// app.listen(PORT, log.info(`Server started on port ${PORT}`));

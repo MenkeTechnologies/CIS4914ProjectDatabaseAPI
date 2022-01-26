@@ -4,6 +4,7 @@ const User = require("./models/user.model");
 const bcrypt = require("bcryptjs");
 const {body, validationResult} = require('express-validator');
 const projectDBUtil = require('../util/projectDBUtil');
+const log = projectDBUtil.log;
 
 
 // Login User
@@ -26,7 +27,7 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
   const email = req.body.email;
   const password = req.body.password;
 
-  console.log(req.body);
+  log.info(req.body);
 
   User.findOne({email})
     .then((user) => {
@@ -50,7 +51,7 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
 
 // Registeration handler
 router.post("/register", body('email').isEmail(), body('password').isLength({min: 5}), (req, res) => {
-  console.log(req.body);
+  log.info(req.body);
 
   const validationResult1 = validationResult(req);
   if (!validationResult1.isEmpty()) {
@@ -59,7 +60,7 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
 
   const {name, email, password, password2} = req.body;
 
-  console.log(name);
+  log.info(name);
 
   let errors = [];
   if (!name || !email || !password || !password2) {
@@ -80,11 +81,11 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
   } else {
     // if the validation is successful
     User.findOne({email}).then((user) => {
-      console.log("Find one initiated");
-      console.log(user);
+      log.info("Find one initiated");
+      log.info(user);
       if (user) {
         errors.push({msg: "User is already registered"});
-        console.log("Dupe user");
+        log.info("Dupe user");
         return res.status(400).json(errors);
       } else {
         const newUser = new User({
@@ -96,7 +97,7 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
         // Hashing the password
         bcrypt.genSalt(10, (err, salt) =>
           bcrypt.hash(newUser.password, salt, (err, hash) => {
-            console.log("Inside bcrypt");
+            log.info("Inside bcrypt");
             if (err) throw err;
             newUser.password = hash;
             // Save the user to Mongodb
