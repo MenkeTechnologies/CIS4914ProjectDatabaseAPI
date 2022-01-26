@@ -16,13 +16,3 @@ Just a Simple Express API
     - `npm start`
 
 Server will run on `localhost:4000`
-
-Create secret.json with format:
-
-> secret.json
-
-```json
-{
-    "connection": "mongodb://USER:PASSWORD=@IP:PORT/?authSource=admin"
-}
-```
