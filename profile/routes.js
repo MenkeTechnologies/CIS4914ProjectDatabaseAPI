@@ -28,16 +28,15 @@ router.route('/:id').get((req, res) => {
 router.route('/register').post((req, res) => {
   let profile = new Profile(req.body);
   profile.save()
-    .then(profile => {
+    .then(_profile => {
       res.status(200).json(projectDBUtil.successMsg('registration successful'));
     })
     .catch(err => {
+      log.error(err)
       res.status(500).send(projectDBUtil.errorMsg('registration failed'));
     });
 });
 
-
-// Edit existing profile data
 router.route('/edit/:id').post((req, res) => {
   Profile.findById(req.params.id, (err, profile) => {
     if (!profile) {
@@ -52,9 +51,10 @@ router.route('/edit/:id').post((req, res) => {
     profile.state_address = req.body.state_address;
     profile.zipcode = req.body.zipcode;
 
-    profile.save().then(profile => {
+    profile.save().then(_profile => {
       res.json(projectDBUtil.successMsg('Profile updated'));
-    }).catch(err => {
+    }).catch(_err => {
+      log.error(err);
       res.status(500).send(projectDBUtil.errorMsg('Update not possible'));
     });
   });

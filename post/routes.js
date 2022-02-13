@@ -52,13 +52,13 @@ router.post("/create", authMiddleware, (req, res) => {
       });
       log.info(newPost);
 
-      //From here you can take the newPost object and send to Database
       newPost
         .save()
-        .then((post) => {
+        .then((_post) => {
           res.send("post saved to database");
         })
         .catch((err) => {
+          log.error(err)
           res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
         });
     }
@@ -70,7 +70,10 @@ router.get("/", (req, res) => {
   Post.find({}).then(
     posts => {
       return res.status(200).send(posts);
-    }).catch(err => res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`)));
+    }).catch(err => {
+    log.error(err)
+    return res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
+  });
 });
 
 router.get("/my_posts", authMiddleware, (req, res) => {
@@ -78,7 +81,10 @@ router.get("/my_posts", authMiddleware, (req, res) => {
   Post.find({"email": req.user.email}).then(
     posts => {
       return res.status(200).send(posts);
-    }).catch(err => res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`)));
+    }).catch(err => {
+    log.error(err)
+    return res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
+  });
 });
 
 router.post("/volunteer/", authMiddleware, (req, res) => {
@@ -92,7 +98,13 @@ router.post("/volunteer/", authMiddleware, (req, res) => {
           return res.send("User assigned as volunteer");
         });
       });
-    }).catch(err => res.status(400).send(projectDBUtil.errorMsg(`unable to set as volunteer ${err}`)));
+    }).catch(err => {
+      log.error(err);
+      res.status(400).send(projectDBUtil.errorMsg(`unable to set as volunteer ${err}`
+      ))
+    }
+  )
+  ;
 });
 
 module.exports = router;

@@ -7,23 +7,12 @@ const projectDBUtil = require('../util/projectDBUtil');
 const log = projectDBUtil.log;
 
 
-// Login User
-// router.get("/login", (req, res) => res.render("login"));
-//
-// // Registering User
-// router.get("/register", (req, res) => res.render("register"));
-
-// Dashboard
-// router.get("/dashboard", )
-
 router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}), (req, res) => {
 
   const validationResult1 = validationResult(req);
   if (!validationResult1.isEmpty()) {
     return res.status(400).json(projectDBUtil.errorMsg(validationResult1.array()));
   }
-
-
   const email = req.body.email;
   const password = req.body.password;
 
@@ -45,7 +34,10 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
         }
       });
     })
-    .catch((err) => res.status(500).send(projectDBUtil.errorMsg("user find failure.")));
+    .catch((err) => {
+      log.error(err)
+      return res.status(500).send(projectDBUtil.errorMsg("user find failure."));
+    });
 })
 
 
@@ -75,11 +67,8 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
   }
 
   if (errors.length > 0) {
-
     return res.status(400).json(errors);
-
   } else {
-    // if the validation is successful
     User.findOne({email}).then((user) => {
       log.info("Find one initiated");
       log.info(user);
@@ -94,20 +83,21 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
           password,
         });
 
-        // Hashing the password
         bcrypt.genSalt(10, (err, salt) =>
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             log.info("Inside bcrypt");
             if (err) throw err;
             newUser.password = hash;
-            // Save the user to Mongodb
             newUser
               .save()
-              .then((user) => {
+              .then((_user) => {
                 const token = projectDBUtil.createToken(email);
                 return res.status(200).json(token);
               })
-              .catch((err) => res.status(500).send(err));
+              .catch((err) => {
+                log.error(err)
+                return res.status(500).send(err);
+              });
           })
         );
       }

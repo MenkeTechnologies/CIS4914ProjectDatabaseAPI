@@ -17,14 +17,12 @@ app.use(bodyParser.json());
 
 mongoose.connect(projectDBUtil.MONGODB_CONN_STRING, {useUnifiedTopology: true, useNewUrlParser: true});
 
-mongoose.connection.once('open', () => {
-  log.info(`---- MongoDB database connection established successfully`);
-})
+mongoose.connection.once('open', () =>
+  log.info(`---- MongoDB database connection established successfully`));
 
 app.use(projectDBUtil.PROFILE_API_PREFIX, profileRoutes);
 app.use(projectDBUtil.USER_API_PREFIX, loginRoutes);
 app.use(projectDBUtil.POST_API_PREFIX, postRoutes);
 
-app.listen(process.env.PORT || projectDBUtil.PORT, () => {
-  log.info("---- Server is running on Port: " + projectDBUtil.PORT);
-});
+app.listen(process.env.PORT || projectDBUtil.PORT, () =>
+  log.info("---- Server is running on Port: " + projectDBUtil.PORT));
