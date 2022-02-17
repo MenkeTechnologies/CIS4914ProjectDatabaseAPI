@@ -4,19 +4,16 @@ const projectDBUtil = require("../util/projectDBUtil");
 const creds = require('../secret.json')
 
 const MONGODB_CONN_STRING = creds.connection;
-const PROFILE_API_PREFIX = '/cis4914_project';
-const USER_API_PREFIX = '/cis4914_user';
-const POST_API_PREFIX = '/cis4914_post';
 const PORT = 4000;
 const secret = 'secret';
 const audience = 'http://myapi/protected';
 const issuer = 'http://issuer';
 
 const successMsg = (msg) => ({
-    msg
+  msg
 })
 const errorMsg = (msg) => ({
-    msg
+  msg
 })
 
 // const authMiddleware = () => jwt({
@@ -57,7 +54,7 @@ const authMiddleware = (req, res, next) => {
 
 const createToken = (email) => {
   log.info("createToken called");
-  const token = jsonwebtoken.sign({email}, secret,
+  const token = jsonwebtoken.sign({ email }, secret,
     {
       audience: audience,
       issuer: issuer
@@ -77,8 +74,5 @@ module.exports = {
   audience,
   issuer,
   MONGODB_CONN_STRING,
-  PROFILE_API_PREFIX,
-  USER_API_PREFIX,
-  POST_API_PREFIX,
   PORT
 }
