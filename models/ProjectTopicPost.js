@@ -6,11 +6,16 @@ const MemberSchema = new mongoose.Schema({
         required: true
     },
 
+    memberEmail: {
+        type: String,
+        required: false
+    },
+
     memberContact: {
         type: String,
         required: false
     }
-})
+});
 
 const ProjectTopicPostSchema = new mongoose.Schema({
     date: {
@@ -38,14 +43,14 @@ const ProjectTopicPostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    //Change lists to string arrays
+
     skillsList: {
-        type: String,
+        type: [String],
         required: true
     },
 
     softwareList: {
-        type: String,
+        type: [String],
         required: true
     },
 
@@ -54,12 +59,12 @@ const ProjectTopicPostSchema = new mongoose.Schema({
         required: false
     },
 
-    members: {
-        type: String,
+    memberList: {
+        type: [MemberSchema],
         required: false
     }
-})
+});
 
-const model = mongoose.model('ProjectTopicPostModel', ProjectTopicPostSchema)
+const model = mongoose.model('ProjectTopicPostModel', ProjectTopicPostSchema);
 
-module.exports = model
+module.exports = model;

@@ -6,14 +6,16 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const projectDBUtil = require("../util/projectDBUtil");
 
-const projectTopicPostRoute = require('../routes/ProjectTopicPostRoute')
+const projectTopicPostRoute = require('../routes/ProjectTopicPostRoute');
+const lookingForGroupPostRoute = require('../routes/LookingForGroupPostRoute');
 
 const log = projectDBUtil.log;
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 
-app.use('/posts', projectTopicPostRoute);
+app.use('/projecttopicposts', projectTopicPostRoute);
+app.use('/lookingforgroupposts', lookingForGroupPostRoute);
 
 mongoose.connect(projectDBUtil.MONGODB_CONN_STRING, { useUnifiedTopology: true, useNewUrlParser: true });
 

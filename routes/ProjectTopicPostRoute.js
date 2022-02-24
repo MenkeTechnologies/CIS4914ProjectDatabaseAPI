@@ -4,7 +4,6 @@ let mongoose = require('mongoose'),
 
 let ProjectTopicPostSchema = require('../models/ProjectTopicPost');
 
-// CREATE Student
 router.route('/create-projecttopicpost').post((req, res, next) => {
   ProjectTopicPostSchema.create(req.body, (error, data) => {
     if (error) {
@@ -15,5 +14,15 @@ router.route('/create-projecttopicpost').post((req, res, next) => {
     }
   })
 });
+
+router.route('/').get((req, res) => {
+  ProjectTopicPostSchema.find((error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+})
 
 module.exports = router;
