@@ -1,5 +1,4 @@
 const jsonwebtoken = require('jsonwebtoken');
-const jwt = require('express-jwt');
 const projectDBUtil = require("../util/projectDBUtil");
 const creds = require('../secret.json')
 
@@ -15,13 +14,6 @@ const successMsg = (msg) => ({
 const errorMsg = (msg) => ({
   msg
 })
-
-// const authMiddleware = () => jwt({
-//     secret: secret,
-//     // audience: audience,
-//     // issuer: issuer,
-//     algorithms: ["HS256"]
-// });
 
 const Logger = require('pretty-logger');
 Logger.setLevel("info");
@@ -48,6 +40,7 @@ const authMiddleware = (req, res, next) => {
     req.user = verified;
     next();
   } catch (err) {
+    log.error(err)
     res.status(400).send(projectDBUtil.errorMsg('Invalid Token'));
   }
 }

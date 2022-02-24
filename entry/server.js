@@ -19,9 +19,8 @@ app.use('/lookingforgroupposts', lookingForGroupPostRoute);
 
 mongoose.connect(projectDBUtil.MONGODB_CONN_STRING, { useUnifiedTopology: true, useNewUrlParser: true });
 
-mongoose.connection.once('open', () => {
-  log.info(`---- MongoDB database connection established successfully`);
-})
+mongoose.connection.once('open', () =>
+  log.info(`---- MongoDB database connection established successfully`));
 
 app.listen(process.env.PORT || projectDBUtil.PORT, () => {
   log.info("---- Server is running on Port: " + projectDBUtil.PORT);
