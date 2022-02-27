@@ -4,24 +4,24 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const projectDBUtil = require("../util/projectDBUtil");
 
-const projectTopicPostRoute = require('../routes/ProjectTopicPostRoute');
-const lookingForGroupPostRoute = require('../routes/LookingForGroupPostRoute');
+const projectRoutes = require('../routes/ProjectPostRoutes');
+const seekingRoutes = require('../routes/SeekingPostRoutes');
+const userRoutes = require('../routes/UserRoutes');
+const {log, MONGODB_CONN_STRING, PORT} = require("../util/Util");
 
-const log = projectDBUtil.log;
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 
-app.use('/projecttopicposts', projectTopicPostRoute);
-app.use('/lookingforgroupposts', lookingForGroupPostRoute);
+app.use('/project-post', projectRoutes);
+app.use('/seeking-post', seekingRoutes);
+app.use('/user', userRoutes);
 
-mongoose.connect(projectDBUtil.MONGODB_CONN_STRING, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(MONGODB_CONN_STRING, {useUnifiedTopology: true, useNewUrlParser: true});
 
-mongoose.connection.once('open', () =>
-  log.info(`---- MongoDB database connection established successfully`));
+mongoose.connection.once('open', () => log.info(`---- MongoDB database connection established successfully`));
 
-app.listen(process.env.PORT || projectDBUtil.PORT, () => {
-  log.info("---- Server is running on Port: " + projectDBUtil.PORT);
+app.listen(process.env.PORT || PORT, () => {
+  log.info("---- Server is running on Port: " + PORT);
 });

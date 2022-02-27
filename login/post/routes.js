@@ -2,12 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Post = require("./models/post.model");
 const User = require("../login/models/user.model");
-const bcrypt = require("bcryptjs");
-const {body, validationResult} = require("express-validator");
-const projectDBUtil = require("../util/projectDBUtil");
-const {authMiddleware} = require("../util/projectDBUtil");
-const mongoose = require("mongoose");
-const log = projectDBUtil.log;
+const {authMiddleware} = require("../../util/Util");
+const log = log;
 
 router.post("/create", authMiddleware, (req, res) => {
   log.info("Create called.");
@@ -34,7 +30,7 @@ router.post("/create", authMiddleware, (req, res) => {
     log.info(user_email);
     if (!email) {
       log.info("User mismatch");
-      return res.status(400).json(projectDBUtil.errorMsg("Not a registered user"));
+      return res.status(400).json(errorMsg("Not a registered user"));
     } else {
       const newPost = new Post({
         email: user_email,
@@ -59,7 +55,7 @@ router.post("/create", authMiddleware, (req, res) => {
         })
         .catch((err) => {
           log.error(err)
-          res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
+          res.status(400).send(errorMsg(`unable to save to database ${err}`));
         });
     }
   });
@@ -72,7 +68,7 @@ router.get("/", (req, res) => {
       return res.status(200).send(posts);
     }).catch(err => {
     log.error(err)
-    return res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
+    return res.status(400).send(errorMsg(`unable to save to database ${err}`));
   });
 });
 
@@ -83,7 +79,7 @@ router.get("/my_posts", authMiddleware, (req, res) => {
       return res.status(200).send(posts);
     }).catch(err => {
     log.error(err)
-    return res.status(400).send(projectDBUtil.errorMsg(`unable to save to database ${err}`));
+    return res.status(400).send(errorMsg(`unable to save to database ${err}`));
   });
 });
 
@@ -100,7 +96,7 @@ router.post("/volunteer/", authMiddleware, (req, res) => {
       });
     }).catch(err => {
       log.error(err);
-      res.status(400).send(projectDBUtil.errorMsg(`unable to set as volunteer ${err}`
+      res.status(400).send(errorMsg(`unable to set as volunteer ${err}`
       ))
     }
   )

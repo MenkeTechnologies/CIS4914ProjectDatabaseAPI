@@ -1,5 +1,4 @@
 const jsonwebtoken = require('jsonwebtoken');
-const projectDBUtil = require("../util/projectDBUtil");
 const creds = require('../secret.json')
 
 const MONGODB_CONN_STRING = creds.connection;
@@ -26,12 +25,26 @@ const customConfig = {
 };
 const log = new Logger(customConfig);
 
+const handleClosure = (req, res) =>
+  (err, data) => {
+    log.info(`params ${JSON.stringify(req.params)} body: ${JSON.stringify(req.body)}`)
+    logErrorOrJson(err, data, res);
+  };
+
+const logErrorOrJson = (err, data, res) => {
+  if (err) {
+    log.error(data)
+  } else {
+    res.json(data)
+  }
+};
+
 const authMiddleware = (req, res, next) => {
   log.info('token attempting to verify');
   const token = req.header('auth-token');
   log.info(token);
   if (!token) {
-    return res.status(401).send(projectDBUtil.errorMsg('Access Denied'));
+    return res.status(401).send(errorMsg('Access Denied'));
   }
   log.info(token);
   try {
@@ -41,13 +54,13 @@ const authMiddleware = (req, res, next) => {
     next();
   } catch (err) {
     log.error(err)
-    res.status(400).send(projectDBUtil.errorMsg('Invalid Token'));
+    res.status(400).send(errorMsg('Invalid Token'));
   }
 }
 
 const createToken = (email) => {
   log.info("createToken called");
-  const token = jsonwebtoken.sign({ email }, secret,
+  const token = jsonwebtoken.sign({email}, secret,
     {
       audience: audience,
       issuer: issuer
@@ -67,5 +80,7 @@ module.exports = {
   audience,
   issuer,
   MONGODB_CONN_STRING,
-  PORT
+  PORT,
+  logErrorOrJson,
+  handleClosure
 }
