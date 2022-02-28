@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 
 // User Model
 const User = require("../../models/user.model");
+const {logError} = require("../../../util/Util");
 module.exports = passport => {
   passport.use(
     new localStrategy({usernameField: "email"}, (email, password, done) => {
@@ -23,7 +24,7 @@ module.exports = passport => {
             }
           });
         })
-        .catch((err) => log.error(err));
+        .catch((err) => logError(err));
     })
   );
 

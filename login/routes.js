@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("./models/user.model");
 const bcrypt = require("bcryptjs");
 const {body, validationResult} = require('express-validator');
-const {errorMsg, createToken, log} = require("../util/Util");
+const {errorMsg, createToken, log, logError} = require("../util/Util");
 
 
 router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}), (req, res) => {
@@ -34,7 +34,7 @@ router.post('/auth', body('email').isEmail(), body('password').isLength({min: 5}
       });
     })
     .catch((err) => {
-      log.error(err)
+      logError(err)
       return res.status(500).send(errorMsg("user find failure."));
     });
 })
@@ -94,7 +94,7 @@ router.post("/register", body('email').isEmail(), body('password').isLength({min
                 return res.status(200).json(token);
               })
               .catch((err) => {
-                log.error(err)
+                logError(err)
                 return res.status(500).send(err);
               });
           })

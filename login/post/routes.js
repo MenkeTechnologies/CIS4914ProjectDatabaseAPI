@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Post = require("./models/post.model");
 const User = require("../login/models/user.model");
-const {authMiddleware, errorMsg, log} = require("../../util/Util");
+const {authMiddleware, errorMsg, log, logError} = require("../../util/Util");
 
 router.post("/create", authMiddleware, (req, res) => {
   log.info("Create called.");
@@ -53,7 +53,7 @@ router.post("/create", authMiddleware, (req, res) => {
           res.send("post saved to database");
         })
         .catch((err) => {
-          log.error(err)
+          logError(err)
           res.status(400).send(errorMsg(`unable to save to database ${err}`));
         });
     }
@@ -66,7 +66,7 @@ router.get("/", (req, res) => {
     posts => {
       return res.status(200).send(posts);
     }).catch(err => {
-    log.error(err)
+    logError(err)
     return res.status(400).send(errorMsg(`unable to save to database ${err}`));
   });
 });
@@ -77,7 +77,7 @@ router.get("/my_posts", authMiddleware, (req, res) => {
     posts => {
       return res.status(200).send(posts);
     }).catch(err => {
-    log.error(err)
+    logError(err)
     return res.status(400).send(errorMsg(`unable to save to database ${err}`));
   });
 });
@@ -94,7 +94,7 @@ router.post("/volunteer/", authMiddleware, (req, res) => {
         });
       });
     }).catch(err => {
-      log.error(err);
+      logError(err);
       res.status(400).send(errorMsg(`unable to set as volunteer ${err}`
       ))
     }

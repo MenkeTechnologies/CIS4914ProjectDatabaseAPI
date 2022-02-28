@@ -31,10 +31,14 @@ const handleClosure = (req, res) =>
     logErrorOrJson(err, data, res);
   };
 
+const logError = (obj) => {
+  log.error(JSON.stringify(obj))
+}
+
 const logErrorOrJson = (err, data, res) => {
   if (err) {
-    log.error(err.message || "error");
-    res.status(400).send(errorMsg(err.message))
+    logError(err);
+    res.status(400).send(errorMsg(err))
   } else {
     res.json(data)
   }
@@ -54,7 +58,7 @@ const authMiddleware = (req, res, next) => {
     req.user = verified;
     next();
   } catch (err) {
-    log.error(err)
+    logError(err)
     res.status(400).send(errorMsg('Invalid Token'));
   }
 }
@@ -83,5 +87,6 @@ module.exports = {
   MONGODB_CONN_STRING,
   PORT,
   logErrorOrJson,
+  logError,
   handleClosure
 }
