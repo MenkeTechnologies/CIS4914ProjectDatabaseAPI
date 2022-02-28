@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Post = require("./models/post.model");
 const User = require("../login/models/user.model");
-const {authMiddleware} = require("../../util/Util");
-const log = log;
+const {authMiddleware, errorMsg, log} = require("../../util/Util");
 
 router.post("/create", authMiddleware, (req, res) => {
   log.info("Create called.");
