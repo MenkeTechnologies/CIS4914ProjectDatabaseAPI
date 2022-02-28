@@ -33,7 +33,8 @@ const handleClosure = (req, res) =>
 
 const logErrorOrJson = (err, data, res) => {
   if (err) {
-    log.error(data)
+    log.error(err.message || "error");
+    res.status(400).send(errorMsg(err.message))
   } else {
     res.json(data)
   }
