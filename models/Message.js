@@ -5,7 +5,7 @@ const Message = new mongoose.Schema({
     type: String,
     required: true
   },
-  recepient: {
+  recipient: {
     type: String,
     required: true
   },
