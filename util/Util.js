@@ -27,7 +27,7 @@ const log = new Logger(customConfig);
 
 const handleClosure = (req, res) =>
   (err, data) => {
-    log.info(`params ${JSON.stringify(req.params)} body: ${JSON.stringify(req.body)}`)
+    log.info(`url ${JSON.stringify(req.originalUrl)} params ${JSON.stringify(req.params)} body: ${JSON.stringify(req.body)}`)
     logErrorOrJson(err, data, res);
   };
 
