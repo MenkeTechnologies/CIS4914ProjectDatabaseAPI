@@ -3,8 +3,9 @@ const router = express.Router();
 const User = require('../models/User');
 const {handleClosure, errorMsg, successMsg, log, logError} = require("../util/Util");
 
+router.route('/').get((req, res) => User.find({}, handleClosure(req, res)))
 router.route('/').post((req, res) => User.create(req.body, handleClosure(req, res)));
-router.route('/').get((req, res) => User.find(req.body, handleClosure(req, res)))
+router.route('/search').post((req, res) => User.find(req.body, handleClosure(req, res)))
 router.route('/:id').delete((req, res) => User.delete(req.params.id, req.body, handleClosure(req, res)))
 router.route('/:id').get((req, res) => User.findById(req.params.id, handleClosure(req, res)))
 router.route('/:id').patch((req, res) => {
