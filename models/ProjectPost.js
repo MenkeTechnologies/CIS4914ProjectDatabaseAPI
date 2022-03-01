@@ -2,17 +2,14 @@ const mongoose = require('mongoose')
 const User = require("./User");
 
 const ProjectPost = new mongoose.Schema({
+  author: {
+    type: User.schema,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
   },
-
-  authorType: {
-    type: String,
-    enum: ['Faculty', 'Student'],
-    required: true
-  },
-
   topic: {
     type: String,
     required: true

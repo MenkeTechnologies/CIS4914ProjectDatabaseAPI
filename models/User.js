@@ -21,6 +21,11 @@ const User = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  type: {
+    type: String,
+    enum: ['Faculty', 'Student'],
+    required: true
+  },
 });
 
 module.exports = mongoose.model('User', User);

@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
+const User = require("./User");
 
 const Message = new mongoose.Schema({
   sender: {
-    type: String,
+    type: User.schema,
     required: true
   },
   recipient: {
-    type: String,
+    type: User.schema,
     required: true
   },
   subject: {

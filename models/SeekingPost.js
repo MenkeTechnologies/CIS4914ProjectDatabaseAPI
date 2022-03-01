@@ -3,17 +3,14 @@ const User = require("./User");
 
 
 const SeekingPost = new mongoose.Schema({
+  author: {
+    type: User.schema,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now
   },
-
-  authorType: {
-    type: String,
-    enum: ['Faculty', 'Student'],
-    required: true
-  },
-
   title: {
     type: String,
     required: true
