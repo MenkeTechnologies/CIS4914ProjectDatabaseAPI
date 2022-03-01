@@ -3,8 +3,8 @@ const User = require("./User");
 
 
 const SeekingPost = new mongoose.Schema({
-  author: {
-    type: User.schema,
+  authorId: {
+    type: String,
     required: true
   },
   date: {

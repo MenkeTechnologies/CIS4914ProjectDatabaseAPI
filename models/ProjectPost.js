@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const User = require("./User");
 
 const ProjectPost = new mongoose.Schema({
-  author: {
-    type: User.schema,
+  authorId: {
+    type: String,
     required: true
   },
   date: {
