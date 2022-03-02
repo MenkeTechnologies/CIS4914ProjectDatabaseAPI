@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const User = require("./User");
 const {SchemaTypes} = require("mongoose");
 
 const Message = new mongoose.Schema({

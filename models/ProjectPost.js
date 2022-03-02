@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const User = require("./User");
 const {SchemaTypes} = require("mongoose");
 
 const ProjectPost = new mongoose.Schema({
@@ -48,7 +47,7 @@ const ProjectPost = new mongoose.Schema({
   },
 
   memberList: {
-    type: [User.schema],
+    type: [SchemaTypes.ObjectId],
     required: false
   }
 });
