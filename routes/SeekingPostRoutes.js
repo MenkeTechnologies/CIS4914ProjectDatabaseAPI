@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const SeekingPost = require('../models/SeekingPost');
-const {handleClosure, errorMsg, successMsg, log, logError} = require("../util/Util");
+const {handleClosure, errorMsg, successMsg, log, logError, AUTHOR} = require("../util/Util");
 
 router.route('/').post((req, res) => SeekingPost.create(req.body, handleClosure(req, res)));
-router.route('/').get((req, res) => SeekingPost.find(req.body, handleClosure(req, res)))
+router.route('/').get((req, res) => SeekingPost.find().populate(AUTHOR).exec(handleClosure(req, res)));
 router.route('/:id').delete((req, res) => SeekingPost.delete(req.params.id, req.body, handleClosure(req, res)))
 router.route('/:id').get((req, res) => SeekingPost.findById(req.params.id, handleClosure(req, res)))
 router.route('/:id').patch((req, res) => {

@@ -6,6 +6,8 @@ const PORT = 4000;
 const secret = 'secret';
 const audience = 'http://myapi/protected';
 const issuer = 'http://issuer';
+const AUTHOR = "author";
+const POST_TYPE = "postType"
 
 const successMsg = (msg) => ({
   msg
@@ -86,6 +88,8 @@ module.exports = {
   issuer,
   MONGODB_CONN_STRING,
   PORT,
+  AUTHOR,
+  POST_TYPE,
   logErrorOrJson,
   logError,
   handleClosure

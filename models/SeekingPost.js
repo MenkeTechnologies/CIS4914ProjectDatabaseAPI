@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const User = require("./User");
+const {SchemaTypes} = require("mongoose");
 
 
 const SeekingPost = new mongoose.Schema({
-  authorId: {
-    type: String,
+  author: {
+    type: SchemaTypes.ObjectId,
+    ref: "User",
     required: true
   },
   date: {
@@ -15,7 +17,11 @@ const SeekingPost = new mongoose.Schema({
     type: String,
     required: true
   },
-
+  postType: {
+    type: String,
+    required: false,
+    default: "seeking"
+  },
   preferredContact: {
     type: String,
     required: true
