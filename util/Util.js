@@ -8,6 +8,8 @@ const audience = 'http://myapi/protected';
 const issuer = 'http://issuer';
 const AUTHOR = "author";
 const POST_TYPE = "postType"
+const SENDER = "sender";
+const RECIPIENT = "recipient";
 
 const successMsg = (msg) => ({
   msg
@@ -90,6 +92,8 @@ module.exports = {
   PORT,
   AUTHOR,
   POST_TYPE,
+  SENDER,
+  RECIPIENT,
   logErrorOrJson,
   logError,
   handleClosure
