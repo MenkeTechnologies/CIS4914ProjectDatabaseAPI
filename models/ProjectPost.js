@@ -45,7 +45,10 @@ const ProjectPost = new mongoose.Schema({
     type: String,
     required: false
   },
-
+  maximumMembers: {
+    type: Number,
+    required: true
+  },
   memberList: {
     type: [SchemaTypes.ObjectId],
     required: false
