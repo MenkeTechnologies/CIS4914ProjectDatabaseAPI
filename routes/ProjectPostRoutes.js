@@ -1,9 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const ProjectPost = require('../models/ProjectPost');
+const User = require('../models/User');
 const {handleClosure, errorMsg, successMsg, log, logError, AUTHOR} = require("../util/Util");
 
-router.route('/').post((req, res) => ProjectPost.create(req.body, handleClosure(req, res)));
+router.route('/').post((req, res) => {
+  members = true;
+  for (member in req.body.memberList) {
+    if (!User.exists({name: member})) {
+      members = false
+    }
+  }
+  if (members) {
+    ProjectPost.create(req.body, handleClosure(req, res))
+  }
+  else {
+    handleClosure(req, res)
+  }
+});
 router.route('/').get((req, res) => ProjectPost.find().populate(AUTHOR).exec(handleClosure(req, res)));
 router.route('/:id').delete((req, res) => ProjectPost.delete(req.params.id, req.body, handleClosure(req, res)))
 router.route('/:id').get((req, res) => ProjectPost.findById(req.params.id, handleClosure(req, res)))

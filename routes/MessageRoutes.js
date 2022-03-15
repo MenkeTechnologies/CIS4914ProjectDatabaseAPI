@@ -1,9 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const Message = require('../models/Message');
+const User = require('../models/User');
 const {handleClosure, errorMsg, successMsg, log, logError, AUTHOR, SENDER, RECIPIENT} = require("../util/Util");
 
-router.route('/').post((req, res) => Message.create(req.body, handleClosure(req, res)));
+router.route('/').post((req, res) => {
+  if (User.exists({name: req.body.recipient})) {
+  Message.create(req.body, handleClosure(req, res))
+  }
+  else {
+    handleClosure(req, res);
+  }
+});
 router.route('/').get((req, res) => Message.find().populate(SENDER).populate(RECIPIENT).exec(handleClosure(req, res)));
 router.route('/:id').delete((req, res) => Message.delete(req.params.id, req.body, handleClosure(req, res)))
 router.route('/:id').get((req, res) => Message.findById(req.params.id, handleClosure(req, res)))
