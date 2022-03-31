@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const {SchemaTypes} = require("mongoose");
 
+/**
+ * @type {module:mongoose.Schema<any, Model<any, any, any, any>, any, any>}
+ */
 const ProjectPost = new mongoose.Schema({
   author: {
     type: SchemaTypes.ObjectId,

@@ -1,5 +1,5 @@
 const jsonwebtoken = require('jsonwebtoken');
-const creds = require('../secret.json')
+const creds = require('../../secret.json')
 
 const MONGODB_CONN_STRING = creds.connection;
 const PORT = 4000;
