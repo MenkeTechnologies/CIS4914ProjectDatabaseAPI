@@ -1,3 +1,7 @@
+/**
+ * @file Message domain object
+ */
+
 const mongoose = require("mongoose");
 const {SchemaTypes} = require("mongoose");
 

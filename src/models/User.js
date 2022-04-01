@@ -1,7 +1,10 @@
+/**
+ * @file User domain object
+ */
+
 const mongoose = require("mongoose");
 
 /**
- *
  * @type {module:mongoose.Schema<any, Model<any, any, any, any>, any, any>}
  */
 const User = new mongoose.Schema({

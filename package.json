@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/entry/server.js",
-    "docs": "jsdoc -r src"
+    "docs": "jsdoc -P package.json -r src",
+    "clean": "rm -rf out"
   },
   "repository": {
     "type": "git",

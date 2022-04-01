@@ -1,3 +1,6 @@
+/**
+ * @file API entry point
+ */
 const helmet = require("helmet");
 const express = require('express');
 const app = express();
@@ -24,9 +27,6 @@ mongoose.connect(MONGODB_CONN_STRING, {useUnifiedTopology: true, useNewUrlParser
 
 mongoose.connection.once('open', () => log.info(`---- MongoDB database connection established successfully`));
 
-/**
- * API entrypoint
- */
 app.listen(process.env.PORT || PORT, () => {
   log.info("---- Server is running on Port: " + PORT);
 });

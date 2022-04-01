@@ -1,3 +1,7 @@
+/**
+ * @file User CRUD Routes
+ */
+
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -18,6 +22,7 @@ router.route('/:id').patch((req, res) => {
       ...post,
       ...req.body
     };
+
 
     updated.save().then((data) => {
       res.json(successMsg(data))

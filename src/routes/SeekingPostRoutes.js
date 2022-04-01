@@ -1,3 +1,7 @@
+/**
+ * @file Seeking Post CRUD Routes
+ */
+
 const express = require('express');
 const router = express.Router();
 const SeekingPost = require('../models/SeekingPost');
