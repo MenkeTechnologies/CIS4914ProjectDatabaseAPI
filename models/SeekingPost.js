@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {SchemaTypes} = require("mongoose");
+const { SchemaTypes } = require("mongoose");
 
 
 const SeekingPost = new mongoose.Schema({
@@ -25,6 +25,11 @@ const SeekingPost = new mongoose.Schema({
     type: String,
     required: true
   },
+  maximumMembers: {
+    type: Number,
+    required: true,
+    default: 6
+  },
 
   summary: {
     type: String,
@@ -32,7 +37,7 @@ const SeekingPost = new mongoose.Schema({
   },
 
   memberList: {
-    type: [SchemaTypes.ObjectId],
+    type: [SchemaTypes.Mixed],
     required: false
   }
 });

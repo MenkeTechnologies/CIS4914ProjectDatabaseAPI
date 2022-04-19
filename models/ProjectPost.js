@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {SchemaTypes} = require("mongoose");
+const { SchemaTypes } = require("mongoose");
 
 const ProjectPost = new mongoose.Schema({
   author: {
@@ -19,6 +19,11 @@ const ProjectPost = new mongoose.Schema({
   topic: {
     type: String,
     required: true
+  },
+  maximumMembers: {
+    type: Number,
+    required: true,
+    default: 6
   },
 
   preferredContact: {
@@ -47,7 +52,7 @@ const ProjectPost = new mongoose.Schema({
   },
 
   memberList: {
-    type: [SchemaTypes.ObjectId],
+    type: [SchemaTypes.Mixed],
     required: false
   }
 });
