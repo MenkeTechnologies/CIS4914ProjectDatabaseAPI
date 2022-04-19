@@ -1,7 +1,14 @@
+/**
+ * @file Seeking Post domain object
+ */
+
 const mongoose = require('mongoose')
 const { SchemaTypes } = require("mongoose");
 
-const ProjectPost = new mongoose.Schema({
+/**
+ * @type {module:mongoose.Schema<any, Model<any, any, any, any>, any, any>}
+ */
+const SeekingPost = new mongoose.Schema({
   author: {
     type: SchemaTypes.ObjectId,
     ref: "User",
@@ -11,12 +18,16 @@ const ProjectPost = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  title: {
+    type: String,
+    required: true
+  },
   postType: {
     type: String,
     required: false,
-    default: "offering"
+    default: "seeking"
   },
-  topic: {
+  preferredContact: {
     type: String,
     required: true
   },
@@ -26,29 +37,9 @@ const ProjectPost = new mongoose.Schema({
     default: 6
   },
 
-  preferredContact: {
-    type: String,
-    required: true
-  },
-
   summary: {
     type: String,
     required: true
-  },
-
-  skillsList: {
-    type: [String],
-    required: true
-  },
-
-  softwareList: {
-    type: [String],
-    required: true
-  },
-
-  advisor: {
-    type: String,
-    required: false
   },
 
   memberList: {
@@ -57,4 +48,4 @@ const ProjectPost = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('ProjectPost', ProjectPost);
+module.exports = mongoose.model('SeekingPost', SeekingPost);

@@ -1,3 +1,7 @@
+/**
+ * @file Project Post CRUD Routes
+ */
+
 const express = require("express");
 const router = express.Router();
 const ProjectPost = require('../models/ProjectPost');
