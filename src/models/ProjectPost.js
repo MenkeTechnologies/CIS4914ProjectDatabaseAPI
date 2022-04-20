@@ -3,7 +3,7 @@
  */
 
 const mongoose = require('mongoose')
-const { SchemaTypes } = require("mongoose");
+const {SchemaTypes} = require("mongoose");
 
 const ProjectPost = new mongoose.Schema({
   author: {
