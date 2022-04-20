@@ -15,6 +15,9 @@ router.route('/').post((req, res) => {
   User.create(req.body, handleClosure(req, res));
 });
 router.route('/search').post((req, res) => {
+  if (req.body.password) {
+    req.body.password = crypto.createHash('sha256').update(req.body.password).digest('hex');
+  }
   User.find(req.body, handleClosure(req, res));
 })
 router.route('/:id').delete((req, res) => User.delete(req.params.id, req.body, handleClosure(req, res)))
